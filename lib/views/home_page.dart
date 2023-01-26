@@ -58,17 +58,38 @@ class _HomePageState extends State<HomePage> {
                         child:Text(
                           //posts![index].title,
                           posts![index].name,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
-                            fontSize: 15,
+                            fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
                                                    
                         ),
+                        
                         onTap: (){
                           //var route  = new MaterialPageRoute(builder: (BuildContext context) => const ItemPage());
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context)=>const ItemPage()));
                         },
-                        )
+                        ),
+                        Text(
+                          posts![index].creator,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.normal,
+                          )
+                        ),
+                        Text(
+                          posts![index].status,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.normal,
+                          )
+                        ),
                       ],
                     ),
                   ),
