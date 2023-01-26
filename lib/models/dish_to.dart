@@ -7,7 +7,7 @@ import 'dart:convert';
 List<DishTo> listFromJson(String str) =>
     List<DishTo>.from(json.decode(str).map((x) => DishTo.fromJson(x)));
 
-String mapToJson(List<DishTo> data) =>
+String maprToJson(List<DishTo> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DishTo {
