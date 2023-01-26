@@ -1,0 +1,381 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Pikerando API
+servers:
+  - url: http://localhost:8080    
+paths:
+  /groupOrders:
+    get:
+      summary: List all GroupOrders
+      operationId: listGroupOrders
+      tags:
+        - groupOrders
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A list array of GroupOrders
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GroupOrderTo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorTo"
+    post:
+      summary: Create an groupOrder
+      operationId: createGroupOrder
+      tags:
+        - groupOrders
+      requestBody:
+        description: the groupOrder properties
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GroupOrderTo"
+
+      responses:
+        '201':
+          description: the groupOrder is created successfully 
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GroupOrderTo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorTo"
+
+  /groupOrders/{groupOrderId}:
+    get:
+      summary: Info for a specific groupOrder
+      operationId: showGroupOrderById
+      tags:
+        - groupOrders
+      parameters:
+        - name: groupOrderId
+          in: path
+          required: true
+          description: The id of the groupOrder to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ItemTo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorTo"
+    patch:
+      summary: Update the status of a groupOrder
+      operationId: updateStatusOfGroupOrder
+      tags:
+        - groupOrders
+      parameters:
+        - name: groupOrderId
+          in: path
+          required: true
+          description: The id of the groupOrder to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description:  GroupOrder updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupOrderTo'
+        404:
+          description: GroupOrder not found
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorTo"
+    delete:
+      summary: delet a groupOrder
+      operationId: deleteGroupOrder
+      tags:
+        - groupOrders
+      parameters:
+        - name: groupOrderId
+          in: path
+          required: true
+          description: The id of the groupOrder to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: groupOrder deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorTo'
+    
+  /items:
+    post:
+        summary: Create an item
+        operationId: createItem
+        tags:
+          - items
+        requestBody:
+          required: true
+          description: the item properites
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemTo"
+
+        responses:
+          '201':
+            description: the item is created successfully 
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ItemTo"
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorTo"
+  /items/{itemId}:
+    patch:
+      summary: Update an item
+      parameters:
+        - name: itemId
+          in: path
+          description: The id of the item to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      operationId: updateItem
+      tags:
+        - items
+      requestBody:
+          required: true
+          description: the item properites
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ItemTo"
+      responses:
+        200:
+          description:  item updated successfully
+        404:
+          description: GroupOrder not found
+          content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/ErrorTo"
+    delete:
+      summary: Deletes a single item based on the ID supplied
+      operationId: deleteItem
+      tags:
+        - items
+      parameters:
+        - name: itemId
+          in: path
+          description: The id of the item to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Item deleted
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorTo'
+    
+  /restaurants:
+    get:
+      summary: List all restaurants
+      operationId: listRestaurants
+      tags:
+        - restaurants
+      parameters:
+        - name: limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: A list of restaurants
+          headers:
+            x-next:
+              description: A link to the next page of responses
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RestaurantTo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorTo"
+                
+  /restaurants/{restaurantId}:
+    get:
+      summary: Info for a specific restaurant
+      operationId: showRestaurantById
+      tags:
+        - restaurants
+      parameters:
+        - name: restaurantId
+          in: path
+          required: true
+          description: The id of the restaurant to retrieve
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RestaurantTo"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorTo"
+components:
+  schemas:
+    GroupOrderTo:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+          
+        restaurantId:
+          type: integer
+          format: int64
+        creator:
+          type: string
+        status:
+          type: string
+          enum:
+            - open
+            - closed
+        totalPrice: 
+          type : number 
+          format : float
+          default: 0
+          
+    ItemTo:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        dishName:
+          type: string
+        creator:
+          type: string
+        groupOrderId:
+          type: integer
+          format: int64
+        price :
+          type : number 
+          format : float
+          default: 0
+        extras : 
+          type: string
+          
+    RestaurantTo:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        menu:
+          type: array
+          items:
+            $ref: "#/components/schemas/DishTo"
+
+    DishTo:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        price: 
+          type : number
+          format : float
+
+    ErrorTo:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
