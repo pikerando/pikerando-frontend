@@ -5,10 +5,11 @@
 import 'dart:convert';
 import 'dish_to.dart';
 
-List<RestaurantTo> listFromJson(String str) => List<RestaurantTo>.from(
-    json.decode(str).map((x) => RestaurantTo.fromJson(x)));
+List<RestaurantTo> RestuarnatListFromJson(String str) =>
+    List<RestaurantTo>.from(
+        json.decode(str).map((x) => RestaurantTo.fromJson(x)));
 
-String mapToJson(List<RestaurantTo> data) =>
+String mapRestaurantToJson(List<RestaurantTo> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class RestaurantTo {
@@ -26,7 +27,7 @@ class RestaurantTo {
 
   String name;
 
-  List<DishTo> menu;
+  List<DishTo>? menu;
 
   factory RestaurantTo.fromJson(Map<String, dynamic> json) => RestaurantTo(
       // id: json["id"],

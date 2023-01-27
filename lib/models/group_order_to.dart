@@ -1,17 +1,18 @@
 // To parse this JSON data, do
 //
-//     final groupOrderTo = groupOrderToFromJson(jsonString);
+//     final GroupOrderTo = GroupOrderToFromJson(jsonString);
 
 import 'dart:convert';
 
-List<GroupOrderTO> listFromJson(String str) => List<GroupOrderTO>.from(
-    json.decode(str).map((x) => GroupOrderTO.fromJson(x)));
+List<GroupOrderTo> groupOrderListFromJson(String str) =>
+    List<GroupOrderTo>.from(
+        json.decode(str).map((x) => GroupOrderTo.fromJson(x)));
 
-String mapToJson(List<GroupOrderTO> data) =>
+String mapGroupOrderToJson(List<GroupOrderTo> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class GroupOrderTO {
-  GroupOrderTO({
+class GroupOrderTo {
+  GroupOrderTo({
     required this.id,
     //required this.title,
     required this.name,
@@ -37,7 +38,7 @@ class GroupOrderTO {
 
   double totalPrice = 0;
 
-  factory GroupOrderTO.fromJson(Map<String, dynamic> json) => GroupOrderTO(
+  factory GroupOrderTo.fromJson(Map<String, dynamic> json) => GroupOrderTo(
         // id: json["id"],
         // title: json["title"],
         id: json["id"],
